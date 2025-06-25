@@ -9,7 +9,8 @@
     <a href="/lista">Alunos Cadastrados</a>
     <br>
 
-    <form th:action="@{/enviar}" th:object="${aluno}" method="POST">
+    <form th:action="@{/cadastrar}" th:object="${aluno}" method="POST">
+        <input type="hidden" th:field="*{id}">
         <label>Nome: </label>
         <input type="text" th:field="*{nome}">
         <label>Curso: </label>

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 public class CadastroController {
 
     private ArrayList<Aluno> alunos = new ArrayList<>();
+    private int proximoId = 1;
 
     @GetMapping("/")
     public String index(Model model){
@@ -20,8 +22,16 @@ public class CadastroController {
         return "cadastro";
     }
 
-    @PostMapping("/enviar")
+    @PostMapping("/cadastrar")
     public String cadastrarAluno(@ModelAttribute Aluno aluno){
+        for(int i = 0; i < alunos.size(); i++){
+            if(alunos.get(i).getId() == aluno.getId()){
+                alunos.set(i, aluno);
+                return "redirect:/lista";
+            }
+        }
+
+        aluno.setId(proximoId++);
         alunos.add(aluno);
         return "redirect:/";
     }
@@ -32,5 +42,14 @@ public class CadastroController {
         return "lista";
     }
 
-
+    @GetMapping("/editar/{id}")
+    public String editarAluno(@PathVariable long id, Model model){
+        for(Aluno a: alunos){
+            if(a.getId() == id){
+                model.addAttribute("aluno", a);
+                return "cadastro";
+            }
+        }
+        return "redirect:/lista";
+    }
 }
