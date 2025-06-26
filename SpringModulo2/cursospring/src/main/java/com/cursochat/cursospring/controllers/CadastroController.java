@@ -53,6 +53,14 @@ public class CadastroController {
         return "redirect:/lista";
     }
 
-
-
+    @GetMapping("/deletar/{id}")
+    public String deletarAluno(@PathVariable int id){
+        for(int i = 0; i < alunos.size(); i++){
+            if(alunos.get(i).getId() == id){
+                alunos.remove(i);
+                return "redirect:/lista";
+            }
+        }
+        return "redirect:/lista";
+    }
 }
