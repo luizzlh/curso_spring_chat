@@ -21,10 +21,8 @@
                 <td th:text="${aluno.nome}"></td>
                 <td th:text="${aluno.curso}"></td>
                 <td>
-                    <a th:href="@{'/editar/' + ${aluno.id}}">Editar</a>
-                </td>
-                <td>
-                    <button><a th:href="@{'/deletar/' + ${aluno.id}}">Excluir</a></button>
+                    <a th:href="@{'/editar/' + ${aluno.id}}">Editar</a> |
+                    <a th:href="@{'/excluir/' + ${aluno.id}}" onclick="return confirm('Tem certeza que deseja excluir?');">Excluir</a>
                 </td>
             </tr>
         </tbody>

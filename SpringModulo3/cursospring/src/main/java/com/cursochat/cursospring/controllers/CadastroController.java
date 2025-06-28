@@ -1,6 +1,7 @@
 package com.cursochat.cursospring.controllers;
 
 import com.cursochat.cursospring.models.Aluno;
+import com.cursochat.cursospring.repositories.AlunoRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +14,7 @@ import java.util.ArrayList;
 @Controller
 public class CadastroController {
 
-    private ArrayList<Aluno> alunos = new ArrayList<>();
-    private int proximoId = 1;
+    private AlunoRepository alunoRepository;
 
     @GetMapping("/")
     public String index(Model model){
@@ -24,43 +24,26 @@ public class CadastroController {
 
     @PostMapping("/cadastrar")
     public String cadastrarAluno(@ModelAttribute Aluno aluno){
-        for (int i = 0; i < alunos.size(); i++) {
-            if (alunos.get(i).getId() == aluno.getId()) {
-                alunos.set(i, aluno);
-                return "redirect:/lista";
-            }
-        }
-
-        aluno.setId(proximoId++);
-        alunos.add(aluno);
+        alunoRepository.save(aluno);
         return "redirect:/lista";
     }
 
     @GetMapping("/lista")
     public String listarAlunos(Model model){
-        model.addAttribute("alunos", alunos);
+        model.addAttribute("alunos", alunoRepository.findAll());
         return "lista";
     }
 
     @GetMapping("/editar/{id}")
     public String editarAluno(@PathVariable int id, Model model) {
-        for (Aluno aluno : alunos) {
-            if (aluno.getId() == id) {
-                model.addAttribute("aluno", aluno);
-                return "cadastro";
-            }
-        }
+        Aluno aluno = alunoRepository.findById(id).orElseThrow();
+        model.addAttribute("aluno", aluno);
         return "redirect:/lista";
     }
 
     @GetMapping("/deletar/{id}")
     public String deletarAluno(@PathVariable int id){
-        for(int i = 0; i < alunos.size(); i++){
-            if(alunos.get(i).getId() == id){
-                alunos.remove(i);
-                return "redirect:/lista";
-            }
-        }
+        alunoRepository.deleteById(id);
         return "redirect:/lista";
     }
 }

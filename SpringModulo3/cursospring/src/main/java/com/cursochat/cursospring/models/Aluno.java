@@ -1,7 +1,15 @@
 package com.cursochat.cursospring.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Aluno {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nome;
     private String curso;
@@ -9,8 +17,7 @@ public class Aluno {
     public Aluno() {
     }
 
-    public Aluno(int id, String curso, String nome) {
-        this.id = id;
+    public Aluno(String curso, String nome) {
         this.curso = curso;
         this.nome = nome;
     }
