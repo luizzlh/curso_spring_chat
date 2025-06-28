@@ -2,6 +2,7 @@ package com.cursochat.cursospring.controllers;
 
 import com.cursochat.cursospring.models.Aluno;
 import com.cursochat.cursospring.repositories.AlunoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 @Controller
 public class CadastroController {
 
+    @Autowired
     private AlunoRepository alunoRepository;
 
     @GetMapping("/")
@@ -37,7 +39,10 @@ public class CadastroController {
     @GetMapping("/editar/{id}")
     public String editarAluno(@PathVariable int id, Model model) {
         Aluno aluno = alunoRepository.findById(id).orElseThrow();
-        model.addAttribute("aluno", aluno);
+        if(aluno.getId() == id){
+            model.addAttribute("aluno", aluno);
+            return "cadastro";
+        }
         return "redirect:/lista";
     }
 
