@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<div th:fragment="cabecalho" class="container">
+    <header class="collapse navbar-collapse justify-content-md-center">
+        <nav class="container d-flex flex-wrap justify-content-center">
+            <h1 class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto link-body-emphasis text-decoration-none">Sistema de Alunos</h1>
+            <ul class="navbar-nav">
+                <li class="nav-item"><a th:href="@{/cadastro}" class="nav-link">Cadastrar</a></li>
+                <li class="nav-item"><a th:href="@{/lista}" class="nav-link">Listar</a></li>
+            </ul>
+        </nav>
+    </header>
+</div>
+</html>
