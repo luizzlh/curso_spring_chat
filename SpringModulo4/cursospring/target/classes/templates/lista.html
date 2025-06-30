@@ -8,8 +8,8 @@
     <div layout:fragment="conteudo">
 
         <form th:action="@{/lista}" method="get">
-            <input type="text" name="nome" placeholder="Buscar por nome" th:value="${nome}">
-            <button type="submit">Buscar</button>
+            <input type="text" name="nome" placeholder="Buscar por nome" th:value="${nome}" class="form-control">
+            <button type="submit" class="btn btn-primary w-100 py-2">Buscar</button>
             <a th:href="@{/lista}">Limpar</a>
         </form>
 
