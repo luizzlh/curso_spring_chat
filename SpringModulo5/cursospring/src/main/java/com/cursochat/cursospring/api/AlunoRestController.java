@@ -1,5 +1,7 @@
 package com.cursochat.cursospring.api;
 
+import com.cursochat.cursospring.dto.AlunoRequestDTO;
+import com.cursochat.cursospring.dto.AlunoResponseDTO;
 import com.cursochat.cursospring.models.Aluno;
 import com.cursochat.cursospring.repositories.AlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +19,9 @@ public class AlunoRestController {
     private AlunoRepository alunoRepository;
 
     @GetMapping
-    public List<Aluno> listarTodos() {
-        return alunoRepository.findAll();
+    public List<AlunoResponseDTO> listarTodos() {
+        return alunoRepository.findAll().stream()
+                .map(aluno -> new AlunoResponseDTO(aluno.getId(), aluno.getNome(), aluno.getCurso())).toList();
     }
 
     @GetMapping("/{id}")
@@ -29,8 +32,13 @@ public class AlunoRestController {
     }
 
     @PostMapping
-    public Aluno criar(@RequestBody Aluno aluno) {
-        return alunoRepository.save(aluno);
+    public AlunoResponseDTO criar(@RequestBody AlunoRequestDTO dto) {
+        Aluno aluno = new Aluno();
+        aluno.setNome(dto.getNome());
+        aluno.setCurso(dto.getCurso());
+        Aluno salvo = alunoRepository.save(aluno);
+
+        return new AlunoResponseDTO(salvo.getId(), salvo.getNome(), salvo.getCurso());
     }
 
     @PutMapping("/{id}")

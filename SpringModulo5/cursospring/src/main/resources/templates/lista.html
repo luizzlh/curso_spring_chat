@@ -5,16 +5,16 @@
 <head>
 <body>
 
-    <div layout:fragment="conteudo">
+    <div layout:fragment="conteudo" class="form-signin w-50 m-auto">
 
         <form th:action="@{/lista}" method="get">
-            <input type="text" name="nome" placeholder="Buscar por nome" th:value="${nome}" class="form-control">
-            <button type="submit" class="btn btn-primary w-100 py-2">Buscar</button>
+            <input type="text" name="nome" placeholder="Buscar por nome" th:value="${nome}" class="form-control"><br>
+            <button type="submit" class="btn btn-primary w-100 py-2">Buscar</button><br><br>
             <a th:href="@{/lista}">Limpar</a>
         </form>
-
-        <table border="1">
-            <thead>
+        <br>
+        <table border="1" class="table">
+            <thead class="thead-dark">
                 <tr>
                     <th>ID</th>
                     <th>Nome</th>
