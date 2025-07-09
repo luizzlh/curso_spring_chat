@@ -4,6 +4,7 @@ import com.cursochat.cursospring.dto.AlunoRequestDTO;
 import com.cursochat.cursospring.dto.AlunoResponseDTO;
 import com.cursochat.cursospring.models.Aluno;
 import com.cursochat.cursospring.repositories.AlunoRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,13 +33,13 @@ public class AlunoRestController {
     }
 
     @PostMapping
-    public AlunoResponseDTO criar(@RequestBody AlunoRequestDTO dto) {
+    public ResponseEntity<AlunoResponseDTO> criar(@RequestBody @Valid AlunoRequestDTO dto) {
         Aluno aluno = new Aluno();
         aluno.setNome(dto.getNome());
         aluno.setCurso(dto.getCurso());
         Aluno salvo = alunoRepository.save(aluno);
 
-        return new AlunoResponseDTO(salvo.getId(), salvo.getNome(), salvo.getCurso());
+        return ResponseEntity.ok(new AlunoResponseDTO(salvo.getId(), salvo.getNome(), salvo.getCurso()));
     }
 
     @PutMapping("/{id}")
