@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,9 +27,9 @@ public class AlunoRestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Aluno> buscarPorId(@PathVariable int id) {
-        Optional<Aluno> aluno = alunoRepository.findById(id);
-        return aluno.map(ResponseEntity::ok)
+    public ResponseEntity<AlunoResponseDTO> buscar(@PathVariable int id) {
+        return alunoRepository.findById(id)
+                .map(aluno -> ResponseEntity.ok(new AlunoResponseDTO(aluno)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
@@ -39,7 +40,8 @@ public class AlunoRestController {
         aluno.setCurso(dto.getCurso());
         Aluno salvo = alunoRepository.save(aluno);
 
-        return ResponseEntity.ok(new AlunoResponseDTO(salvo.getId(), salvo.getNome(), salvo.getCurso()));
+        URI location = URI.create("/api/alunos/" + salvo.getId());
+        return ResponseEntity.created(location).body(new AlunoResponseDTO(salvo));
     }
 
     @PutMapping("/{id}")
@@ -58,7 +60,8 @@ public class AlunoRestController {
         if (!alunoRepository.existsById(id)) {
             return ResponseEntity.notFound().build();
         }
+
         alunoRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.noContent().build(); // 204 No Content
     }
 }

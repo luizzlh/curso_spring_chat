@@ -1,5 +1,7 @@
 package com.cursochat.cursospring.dto;
 
+import com.cursochat.cursospring.models.Aluno;
+
 public class AlunoResponseDTO {
     private int id;
     private String nome;
@@ -9,6 +11,9 @@ public class AlunoResponseDTO {
         this.id = id;
         this.nome = nome;
         this.curso = curso;
+    }
+
+    public AlunoResponseDTO(Aluno salvo) {
     }
 
     public int getId() {
