@@ -8,8 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -26,8 +24,8 @@ public class CadastroController {
 
     @PostMapping("/cadastrar")
     public String cadastrarAluno(@Valid @ModelAttribute Aluno aluno,
-                                 BindingResult result,
-                                 Model model){
+                                BindingResult result,
+                                Model model){
         if (result.hasErrors()){
             return "cadastro";
         }
